@@ -1,0 +1,76 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    template="/WEB-INF/templates/template.xhtml">
+    
+	<ui:define name="title">Cadastro Aluno</ui:define>
+  
+  	<ui:define name="body">
+  		<h:form>
+  		
+  			<table>
+  			
+  				<tr>
+  					<td>
+		  				<h:outputLabel value="Nome: " />
+		  			</td>
+		  			<td>
+			  			<h:inputText value="#{cadastroAlunoController.aluno.nome}" />
+			  		</td>
+		  		</tr>
+
+  				<tr>
+  					<td>
+		  				<h:outputLabel value="Matricula: " />
+		  			</td>
+		  			<td>
+			  			<h:inputText value="#{cadastroAlunoController.aluno.matricula}" />
+			  		</td>
+		  		</tr>
+		  		
+  				<tr>
+  					<td>
+		  				<h:outputLabel value="Cep: " />
+		  			</td>
+		  			<td>
+			  			<h:inputText value="#{cadastroAlunoController.aluno.endereco.cep}" >
+			  				<f:ajax listener="#{cadastroAlunoController.consultarEnderecoNoCorreio}" event="blur" render="@form"/>
+			  			</h:inputText>
+			  		</td>
+		  		</tr>		  		
+		  		
+  				<tr>
+  					<td>
+		  				<h:outputLabel value="Cidade: " />
+		  			</td>
+		  			<td>
+			  			<h:inputText value="#{cadastroAlunoController.aluno.endereco.cidade}" size="40" />			  				
+			  		</td>
+		  		</tr>		  		
+		  	
+  				<tr>
+  					<td>
+		  				<h:outputLabel value="Bairro: " />
+		  			</td>
+		  			<td>
+			  			<h:inputText value="#{cadastroAlunoController.aluno.endereco.bairro}"  size="40"/>
+			  		</td>
+		  		</tr>
+		  		
+		  		<tr>
+  					<td>
+		  				<h:outputLabel value="Logradouro: " />
+		  			</td>
+		  			<td>
+			  			<h:inputText value="#{cadastroAlunoController.aluno.endereco.logradouro}" size="80" />
+			  		</td>
+		  		</tr>
+		  		
+			</table>
+			
+			
+  		</h:form>
+	</ui:define>
+			
+</ui:composition>
