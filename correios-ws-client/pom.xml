@@ -14,8 +14,7 @@
 
   <build>
     <plugins>
-
-	<plugin>
+		<plugin>
            <groupId>org.apache.maven.plugins</groupId>
            <artifactId>maven-compiler-plugin</artifactId>
            <version>2.3.2</version>
@@ -24,28 +23,70 @@
                <target>1.7</target>
            </configuration>
        </plugin>
-
-       <plugin>
-          <groupId>org.jvnet.jax-ws-commons</groupId>
-    	 <artifactId>jaxws-maven-plugin</artifactId>
-          <version>2.3</version>
-         <executions>
-             <execution>
-               <goals>
-                 <goal>wsimport</goal>
-               </goals>
-               <configuration>
-                 <wsdlUrls>
-                   <wsdlUrl>http://localhost:8080/correios-ws/CorreiosWS?wsdl</wsdlUrl>
-                 </wsdlUrls>
-                 <sourceDestDir>${basedir}/src/main/java</sourceDestDir>
-             	<packageName>br.com.correiows.client</packageName>
-               </configuration>
-             </execution>
-           </executions>
-       </plugin>
      </plugins>
-
   </build>
+
+
+
+
+  <profiles>
+	<profile>
+		<id>wsimport</id>
+		<build>
+		<plugins>
+			<plugin>
+		        <groupId>org.jvnet.jax-ws-commons</groupId>
+		    	<artifactId>jaxws-maven-plugin</artifactId>
+		         <version>2.3</version>
+		         <executions>
+		             <execution>
+		               <goals>
+		                 <goal>wsimport</goal>
+		               </goals>
+		               <configuration>
+		                 <wsdlUrls>
+		                   <wsdlUrl>http://localhost:8080/correios-ws/CorreiosWS?wsdl</wsdlUrl>
+		                 </wsdlUrls>
+		                 <sourceDestDir>${basedir}/src/main/java</sourceDestDir>
+		             	<packageName>br.com.correiows.client</packageName>
+		             	<bindingDirectory>${basedir}/src/main/resources</bindingDirectory>
+		               </configuration>
+		             </execution>
+		           </executions>
+		       	</plugin>
+	       </plugins>
+		</build>
+	</profile>
+	<profile>
+		<id>cxf</id>
+		<build>
+			<plugins>
+				<plugin>
+    				<groupId>org.apache.cxf</groupId>
+    				<artifactId>cxf-codegen-plugin</artifactId>
+    				<version>3.1.1</version>
+    				<executions>
+        				<execution>
+            				<id>generate-sources</id>
+            				<phase>generate-sources</phase>
+            					<configuration>
+                					<sourceRoot>${basedir}/src/main/java</sourceRoot>
+	                				<wsdlOptions>
+	                    				<wsdlOption>
+	                        				<wsdl>http://localhost:8080/correios-ws/CorreiosWS?wsdl</wsdl>
+	                    				</wsdlOption>
+	                				</wsdlOptions>
+            					</configuration>
+					            <goals>
+					                <goal>wsdl2java</goal>
+					            </goals>
+        				</execution>
+    				</executions>
+				</plugin>
+			</plugins>
+		</build>
+	</profile>
+
+  </profiles>
 
 </project>
