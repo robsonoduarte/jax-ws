@@ -5,9 +5,8 @@ import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebResult;
 import javax.jws.WebService;
+import javax.jws.soap.SOAPBinding;
 import javax.xml.bind.annotation.XmlSeeAlso;
-import javax.xml.ws.RequestWrapper;
-import javax.xml.ws.ResponseWrapper;
 
 
 /**
@@ -17,6 +16,7 @@ import javax.xml.ws.ResponseWrapper;
  * 
  */
 @WebService(name = "CorreiosWS", targetNamespace = "http://ws.correios.uscs.edu.br/")
+@SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.BARE)
 @XmlSeeAlso({
     ObjectFactory.class
 })
@@ -25,16 +25,14 @@ public interface CorreiosWS {
 
     /**
      * 
-     * @param arg0
+     * @param parameters
      * @return
-     *     returns br.com.correiows.client.Endereco
+     *     returns br.com.correiows.client.ConsultarEnderecoResponse
      */
     @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "consultarEndereco", targetNamespace = "http://ws.correios.uscs.edu.br/", className = "br.com.correiows.client.ConsultarEndereco")
-    @ResponseWrapper(localName = "consultarEnderecoResponse", targetNamespace = "http://ws.correios.uscs.edu.br/", className = "br.com.correiows.client.ConsultarEnderecoResponse")
-    public Endereco consultarEndereco(
-        @WebParam(name = "arg0", targetNamespace = "")
-        String arg0);
+    @WebResult(name = "consultarEnderecoResponse", targetNamespace = "http://ws.correios.uscs.edu.br/", partName = "parameters")
+    public ConsultarEnderecoResponse consultarEndereco(
+        @WebParam(name = "consultarEndereco", targetNamespace = "http://ws.correios.uscs.edu.br/", partName = "parameters")
+        ConsultarEndereco parameters);
 
 }
